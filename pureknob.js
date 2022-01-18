@@ -74,7 +74,10 @@
 				'_properties': {
 					'colorBG': '#181818',
 					'colorFG': '#ff8800',
+					'colorLabel': '#ffffff',
 					'colorMarkers': '#888888',
+					'label': null,
+					'labelScale': 1.0,
 					'markerStart': 0,
 					'markerEnd': 100,
 					'markerStep': 20,
@@ -144,20 +147,27 @@
 					const markerEnd = properties.markerEnd;
 					const markerStep = properties.markerStep;
 					const trackWidth = properties.trackWidth;
+					const label = properties.label;
+					const labelScale = properties.labelScale;
 					const valMin = properties.valMin;
 					const valMax = properties.valMax;
 					const peaks = properties.valPeaks;
 					const value = properties.val;
+					const colorLabel = properties.colorLabel;
 					const height = this._height;
 					const width = this._width;
 					const lineWidth = Math.round(trackWidth * height);
 					const halfWidth = 0.5 * lineWidth;
+					const centerX = 0.5 * width;
 					const centerY = 0.5 * height;
 					const lineTop = centerY - halfWidth;
 					const lineBottom = centerY + halfWidth;
 					const relativeValue = (value - valMin) / (valMax - valMin);
 					const fillingEnd = width * relativeValue;
 					const numPeaks = peaks.length;
+					const labelY = height * 0.9;
+					const labelSize = Math.round(labelScale * lineWidth * 0.4);
+					const labelSizeString = labelSize.toString();
 					const canvas = this._canvas;
 					const ctx = canvas.getContext('2d');
 
@@ -203,6 +213,17 @@
 					ctx.rect(0, lineTop, fillingEnd, lineWidth);
 					ctx.fillStyle = colorFilling;
 					ctx.fill();
+
+					/*
+					 * Draw the label
+					 */
+					if (label !== null) {
+						ctx.font = labelSizeString + 'px sans-serif';
+						ctx.fillStyle = colorLabel;
+						ctx.textAlign = 'center';
+						ctx.textBaseline = 'middle';
+						ctx.fillText(label, centerX, labelY);
+					}
 
 					/*
 					 * Prepare for drawing the peaks.

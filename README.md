@@ -192,7 +192,10 @@ Properties
 
 - `colorBG`: Color of the bar graph track.
 - `colorFG`: Color of the bar graph filling / indicator.
+- `colorLabel`: Color of the (optional) label.
 - `colorMarkers`: Color of the markers (scale) on both sides (top and bottom) of the bar graph track.
+- `label`: A label (string) displayed below the graph, just above the end of the canvas. Set to null to not print any label.
+- `labelScale`: Linear scaling factor for increasing / decreasing the label size. It defaults to 1.0.
 - `markerStart`: Value where the first marker will be drawn along the track.
 - `markerEnd`: Value where the last marker will be drawn along the track.
 - `markerStep`: Spacing (increment) between the markers.
