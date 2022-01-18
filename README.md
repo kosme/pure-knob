@@ -194,15 +194,21 @@ Properties
 - `colorFG`: Color of the bar graph filling / indicator.
 - `colorLabel`: Color of the (optional) label.
 - `colorMarkers`: Color of the markers (scale) on both sides (top and bottom) of the bar graph track.
+- `colorNumber`: Color the number showing the current value.
+- `fnStringToValue`: Function turning a string into a (numeric) value. (Check the "custom formatting" section below for more information.)
+- `fnValueToString`: Function turning a (numeric) value into a string. (Check the "custom formatting" section below for more information.)
 - `label`: A label (string) displayed below the graph, just above the end of the canvas. Set to null to not print any label.
 - `labelScale`: Linear scaling factor for increasing / decreasing the label size. It defaults to 1.0.
 - `markerStart`: Value where the first marker will be drawn along the track.
 - `markerEnd`: Value where the last marker will be drawn along the track.
 - `markerStep`: Spacing (increment) between the markers.
+- `showValue`: (Optional) flag that determines if the graph value should be displayed on the graph.
+- `textScale`: Linear scaling factor for increasing / decreasing the font size. (`1.0` is default font size.)
 - `trackWidth`: Width of the track, relative to the absolute height of the control.
 - `valMin`: Minimum value which can be displayed (left-hand side of the track).
 - `valMax`: Maximum value which can be displayed (right-hand side of the track).
 - `valPeaks`: List of peak values to be displayed. (Do not edit directly! Use `setPeaks(...)` to set this.)
+- `valSymbol`: (Optional) symbol that must be displayed after the value string. Set to empty string to not print any symbol.
 - `val`: Default value. (Do not edit directly! Use `setValue(...)` to set this.)
 
 There is also a small sample provided for the bar graph control in the `index.xhtml` file.

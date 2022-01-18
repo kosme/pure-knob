@@ -76,15 +76,21 @@
 					'colorFG': '#ff8800',
 					'colorLabel': '#ffffff',
 					'colorMarkers': '#888888',
+					'colorNumber': 'ff8800',
+					'fnStringToValue': function (string) { return parseInt(string); },
+					'fnValueToString': function (value) { return value.toString(); },
 					'label': null,
 					'labelScale': 1.0,
 					'markerStart': 0,
 					'markerEnd': 100,
 					'markerStep': 20,
+					'showValue': false,
+					'textScale': 1.0,
 					'trackWidth': 0.5,
 					'valMin': 0,
 					'valMax': 100,
 					'valPeaks': [],
+					'valSymbol': '',
 					'val': 0
 				},
 
@@ -146,14 +152,20 @@
 					const markerStart = properties.markerStart;
 					const markerEnd = properties.markerEnd;
 					const markerStep = properties.markerStep;
+					const colorNumber = properties.colorNumber;
 					const trackWidth = properties.trackWidth;
 					const label = properties.label;
 					const labelScale = properties.labelScale;
+					const showValue = properties.showValue;
+					const valueToString = properties.fnValueToString;
+					const valueStr = valueToString(value);
 					const valMin = properties.valMin;
 					const valMax = properties.valMax;
 					const peaks = properties.valPeaks;
 					const value = properties.val;
+					const valSymbol = properties.valSymbol;
 					const colorLabel = properties.colorLabel;
+					const textScale = properties.textScale;
 					const height = this._height;
 					const width = this._width;
 					const lineWidth = Math.round(trackWidth * height);
@@ -168,6 +180,8 @@
 					const labelY = height * 0.9;
 					const labelSize = Math.round(labelScale * lineWidth * 0.4);
 					const labelSizeString = labelSize.toString();
+					const fontSize = (0.2 * height) * textScale;
+					const fontSizeString = fontSize.toString();
 					const canvas = this._canvas;
 					const ctx = canvas.getContext('2d');
 
@@ -213,6 +227,20 @@
 					ctx.rect(0, lineTop, fillingEnd, lineWidth);
 					ctx.fillStyle = colorFilling;
 					ctx.fill();
+
+					/*
+					 * Check if the value must be displayed
+					 */
+					if (showValue) {
+						/*
+						 * Draw the number.
+						 */
+						ctx.font = fontSizeString + 'px sans-serif';
+						ctx.fillStyle = colorNumber;
+						ctx.textAlign = 'center';
+						ctx.textBaseline = 'middle';
+						ctx.fillText(valueStr + valSymbol, centerX, centerY);
+					}
 
 					/*
 					 * Draw the label
