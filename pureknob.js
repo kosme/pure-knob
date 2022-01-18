@@ -84,6 +84,7 @@
 					'markerStart': 0,
 					'markerEnd': 100,
 					'markerStep': 20,
+					'needle': false,
 					'showValue': false,
 					'textScale': 1.0,
 					'trackWidth': 0.5,
@@ -154,6 +155,7 @@
 					const markerStep = properties.markerStep;
 					const colorNumber = properties.colorNumber;
 					const trackWidth = properties.trackWidth;
+					const needle = properties.needle;
 					const label = properties.label;
 					const labelScale = properties.labelScale;
 					const showValue = properties.showValue;
@@ -224,7 +226,11 @@
 					 * Draw the filling.
 					 */
 					ctx.beginPath();
-					ctx.rect(0, lineTop, fillingEnd, lineWidth);
+					if (needle) {
+						ctx.rect(fillingEnd - (width * 0.1), lineTop, width * 0.2, lineWidth);
+					} else {
+						ctx.rect(0, lineTop, fillingEnd, lineWidth);
+					}
 					ctx.fillStyle = colorFilling;
 					ctx.fill();
 

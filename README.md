@@ -202,7 +202,8 @@ Properties
 - `markerStart`: Value where the first marker will be drawn along the track.
 - `markerEnd`: Value where the last marker will be drawn along the track.
 - `markerStep`: Spacing (increment) between the markers.
-- `showValue`: (Optional) flag that determines if the graph value should be displayed on the graph.
+- `needle`: Boolean indicating whether we should use a simple marker / needle instead of a filling the bar to indicate value along the graph.
+- `showValue`: Boolean that determines if the graph value should be displayed on the graph. It defaults to false.
 - `textScale`: Linear scaling factor for increasing / decreasing the font size. (`1.0` is default font size.)
 - `trackWidth`: Width of the track, relative to the absolute height of the control.
 - `valMin`: Minimum value which can be displayed (left-hand side of the track).
