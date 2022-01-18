@@ -419,7 +419,7 @@
 					'fnStringToValue': function(string) { return parseInt(string); },
 					'fnValueToString': function(value) { return value.toString(); },
 					'label': null,
-					'labelScale': 0.8,
+					'labelScale': 1.0,
 					'needle': false,
 					'readonly': false,
 					'textScale': 1.0,
@@ -522,7 +522,7 @@
 					const radius = 0.4 * smaller;
 					const labelY = centerY + radius;
 					const lineWidth = Math.round(trackWidth * radius);
-					const labelSize = Math.round(labelScale * lineWidth);
+					const labelSize = Math.round(labelScale * 0.8 * lineWidth);
 					const labelSizeString = labelSize.toString();
 					const fontSize = (0.2 * smaller) * textScale;
 					const fontSizeString = fontSize.toString();
