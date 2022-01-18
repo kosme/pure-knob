@@ -418,6 +418,7 @@
 					'fnStringToValue': function(string) { return parseInt(string); },
 					'fnValueToString': function(value) { return value.toString(); },
 					'label': null,
+					'labelScale': 0.8,
 					'needle': false,
 					'readonly': false,
 					'textScale': 1.0,
@@ -495,6 +496,7 @@
 					const actualStart = angleStart + angleOffset;
 					const actualEnd = angleEnd + angleOffset;
 					const label = properties.label;
+					const labelScale = properties.labelScale;
 					const value = properties.val;
 					const valueToString = properties.fnValueToString;
 					const valueStr = valueToString(value);
@@ -516,7 +518,7 @@
 					const radius = 0.4 * smaller;
 					const labelY = centerY + radius;
 					const lineWidth = Math.round(trackWidth * radius);
-					const labelSize = Math.round(0.8 * lineWidth);
+					const labelSize = Math.round(labelScale * lineWidth);
 					const labelSizeString = labelSize.toString();
 					const fontSize = (0.2 * smaller) * textScale;
 					const fontSizeString = fontSize.toString();

@@ -65,6 +65,7 @@ Properties
 - `fnStringToValue`: Function turning a string into a (numeric) value. (Check the "custom formatting" section below for more information.)
 - `fnValueToString`: Function turning a (numeric) value into a string. (Check the "custom formatting" section below for more information.)
 - `label`: A label (string) displayed at the bottom of the knob, a track radius length away from the center. Set to null to not print any label.
+- `labelScale`: Linear scaling factor for increasing / decreasing the label size. It defaults to 0.8
 - `needle`: Boolean indicating whether we should use a simple marker / needle instead of a filling gauge to indicate value along the knob's track.
 - `readonly`: Boolean indicating whether the value of the knob is write-protected and thus not editable by the user. Useful for displaying values without allowing them to get edited.
 - `textScale`: Linear scaling factor for increasing / decreasing the font size. (`1.0` is default font size.)
