@@ -62,6 +62,7 @@ Properties
 - `colorBG`: Color of the knob track.
 - `colorFG`: Color of the knob gauge / indicator.
 - `colorLabel`: Color of the (optional) label.
+- `colorNumber`: Color the number showing the current value.
 - `fnStringToValue`: Function turning a string into a (numeric) value. (Check the "custom formatting" section below for more information.)
 - `fnValueToString`: Function turning a (numeric) value into a string. (Check the "custom formatting" section below for more information.)
 - `label`: A label (string) displayed at the bottom of the knob, a track radius length away from the center. Set to null to not print any label.
@@ -72,7 +73,7 @@ Properties
 - `trackWidth`: Width of the track, relative to the average radius of the knob.
 - `valMin`: Minimum selectable value.
 - `valMax`: Maximum selectable value.
-- `valUnit`: (Optional) symbol that must be displayed after teh value string.
+- `valSymbol`: (Optional) symbol that must be displayed after the value string. Set to empty string to not print any symbol.
 - `val`: Default value. (Do not edit directly! Use `setValue(...)` to set this.)
 
 Events / Actions

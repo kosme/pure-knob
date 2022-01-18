@@ -415,6 +415,7 @@
 					'colorBG': '#181818',
 					'colorFG': '#ff8800',
 					'colorLabel': '#ffffff',
+					'colorNumber': 'ff8800',
 					'fnStringToValue': function(string) { return parseInt(string); },
 					'fnValueToString': function(value) { return value.toString(); },
 					'label': null,
@@ -425,7 +426,7 @@
 					'trackWidth': 0.4,
 					'valMin': 0,
 					'valMax': 100,
-					'valUnit': '',
+					'valSymbol': '',
 					'val': 0
 				},
 
@@ -503,13 +504,14 @@
 					const valueStr = valueToString(value);
 					const valMin = properties.valMin;
 					const valMax = properties.valMax;
-					const valUnit = properties.valUnit;
+					const valSymbol = properties.valSymbol;
 					const relValue = (value - valMin) / (valMax - valMin);
 					const relAngle = relValue * (angleEnd - angleStart);
 					const angleVal = actualStart + relAngle;
 					const colorTrack = properties.colorBG;
 					const colorFilling = properties.colorFG;
 					const colorLabel = properties.colorLabel;
+					const colorNumber = properties.colorNumber;
 					const textScale = properties.textScale;
 					const trackWidth = properties.trackWidth;
 					const height = this._height;
@@ -565,10 +567,10 @@
 					 * Draw the number.
 					 */
 					ctx.font = fontSizeString + 'px sans-serif';
-					ctx.fillStyle = colorFilling;
+					ctx.fillStyle = colorNumber;
 					ctx.textAlign = 'center';
 					ctx.textBaseline = 'middle';
-					ctx.fillText(valueStr + valUnit, centerX, centerY);
+					ctx.fillText(valueStr + valSymbol, centerX, centerY);
 
 					/*
 					 * Draw the label
