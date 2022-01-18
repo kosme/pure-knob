@@ -72,6 +72,7 @@ Properties
 - `trackWidth`: Width of the track, relative to the average radius of the knob.
 - `valMin`: Minimum selectable value.
 - `valMax`: Maximum selectable value.
+- `valUnit`: (Optional) symbol that must be displayed after teh value string.
 - `val`: Default value. (Do not edit directly! Use `setValue(...)` to set this.)
 
 Events / Actions
@@ -201,4 +202,3 @@ Properties
 - `val`: Default value. (Do not edit directly! Use `setValue(...)` to set this.)
 
 There is also a small sample provided for the bar graph control in the `index.xhtml` file.
-

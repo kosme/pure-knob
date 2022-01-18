@@ -425,6 +425,7 @@
 					'trackWidth': 0.4,
 					'valMin': 0,
 					'valMax': 100,
+					'valUnit': '',
 					'val': 0
 				},
 
@@ -502,6 +503,7 @@
 					const valueStr = valueToString(value);
 					const valMin = properties.valMin;
 					const valMax = properties.valMax;
+					const valUnit = properties.valUnit;
 					const relValue = (value - valMin) / (valMax - valMin);
 					const relAngle = relValue * (angleEnd - angleStart);
 					const angleVal = actualStart + relAngle;
@@ -566,7 +568,7 @@
 					ctx.fillStyle = colorFilling;
 					ctx.textAlign = 'center';
 					ctx.textBaseline = 'middle';
-					ctx.fillText(valueStr, centerX, centerY);
+					ctx.fillText(valueStr + valUnit, centerX, centerY);
 
 					/*
 					 * Draw the label
@@ -575,7 +577,7 @@
 						ctx.font = labelSizeString + 'px sans-serif';
 						ctx.fillStyle = colorLabel;
 						ctx.textAlign = 'center';
-						ctx.textBaseline = 'middle';
+						ctx.textBaseline = 'bottom';
 						ctx.fillText(label, centerX, labelY);
 					}
 
