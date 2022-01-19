@@ -66,7 +66,37 @@
 				'_canvas': canvas,
 				'_div': div,
 				'_height': height,
+				'_listeners': [],
+				'_mousebutton': false,
+				'_previousVal': 0,
+				'_timeout': null,
+				'_timeoutDoubleTap': null,
+				'_touchCount': 0,
 				'_width': width,
+
+				/*
+				 * Notify listeners about value changes.
+				 */
+				'_notifyUpdate': function () {
+					const properties = this._properties;
+					const value = properties.val;
+					const listeners = this._listeners;
+					const numListeners = listeners.length;
+
+					/*
+					 * Call all listeners.
+					 */
+					for (let i = 0; i < numListeners; i++) {
+						const listener = listeners[i];
+
+						/*
+						 * Call listener, if it exists.
+						 */
+						if (listener !== null) {
+							listener(this, value);
+						}
+					}
+				},
 
 				/*
 				 * Properties of this bar graph.
@@ -85,6 +115,7 @@
 					'markerEnd': 100,
 					'markerStep': 20,
 					'needle': false,
+					'readonly': false,
 					'showValue': false,
 					'textScale': 1.0,
 					'trackWidth': 0.5,
@@ -93,6 +124,35 @@
 					'valPeaks': [],
 					'valSymbol': '',
 					'val': 0
+				},
+
+				/*
+				 * Abort value change, restoring the previous value.
+				 */
+				'abort': function () {
+					const previousValue = this._previousVal;
+					const properties = this._properties;
+					properties.val = previousValue;
+					this.redraw();
+				},
+
+				/*
+				 * Adds an event listener.
+				 */
+				'addListener': function (listener) {
+					const listeners = this._listeners;
+					listeners.push(listener);
+				},
+
+				/*
+				 * Commit value, indicating that it is no longer temporary.
+				 */
+				'commit': function () {
+					const properties = this._properties;
+					const value = properties.val;
+					this._previousVal = value;
+					this.redraw();
+					this._notifyUpdate();
 				},
 
 				/*
@@ -159,12 +219,12 @@
 					const label = properties.label;
 					const labelScale = properties.labelScale;
 					const showValue = properties.showValue;
-					const valueToString = properties.fnValueToString;
-					const valueStr = valueToString(value);
 					const valMin = properties.valMin;
 					const valMax = properties.valMax;
-					const peaks = properties.valPeaks;
 					const value = properties.val;
+					const valueToString = properties.fnValueToString;
+					const valueStr = valueToString(value);
+					const peaks = properties.valPeaks;
 					const valSymbol = properties.valSymbol;
 					const colorLabel = properties.colorLabel;
 					const textScale = properties.textScale;
@@ -226,6 +286,9 @@
 					 * Draw the filling.
 					 */
 					ctx.beginPath();
+					/*
+					 * Check if we're in needle mode.
+					 */
 					if (needle) {
 						ctx.rect(fillingEnd - (width * 0.1), lineTop, width * 0.2, lineWidth);
 					} else {
@@ -324,6 +387,14 @@
 				 * Sets the value of this bar graph.
 				 */
 				'setValue': function(value) {
+					this.setValueFloating(value);
+					this.commit();
+				},
+
+				/*
+				 * Sets floating (temporary) value of this bar graph.
+				 */
+				'setValueFloating': function (value) {
 					const properties = this._properties;
 					const valMin = properties.valMin;
 					const valMax = properties.valMax;
@@ -339,6 +410,121 @@
 
 					value = Math.round(value);
 					this.setProperty('val', value);
+				}
+
+			};
+
+			const mouseEventToValue = function (e, properties) {
+				const canvas = e.target;
+				const width = canvas.scrollWidth;
+				const height = canvas.scrollHeight;
+				const centerX = 0.5 * width;
+				const centerY = 0.5 * height;
+				const x = e.offsetX;
+				const y = e.offsetY;
+
+				const valMin = properties.valMin;
+				const valMax = properties.valMax;
+				let value = Math.round((x / width) * (valMax - valMin)) + valMin;
+
+				/*
+				 * Clamp values into valid interval.
+				 */
+				if (value < valMin) {
+					value = valMin;
+				} else if (value > valMax) {
+					value = valMax;
+				}
+				return value;
+			};
+
+			/*
+			 * This is called when the mouse button is depressed.
+			 */
+			const mouseDownListener = function (e) {
+				const btn = e.buttons;
+
+				/*
+				 * It is a left-click.
+				 */
+				if (btn === 1) {
+					const properties = graph._properties;
+					const readonly = properties.readonly;
+
+					/*
+					 * If bar graph is not read-only, process mouse event.
+					 */
+					if (!readonly) {
+						e.preventDefault();
+						const val = mouseEventToValue(e, properties);
+						graph.setValueFloating(val);
+					}
+
+					graph._mousebutton = true;
+				}
+			};
+
+			/*
+			 * This is called when the mouse cursor is moved.
+			 */
+			const mouseMoveListener = function(e) {
+				const btn = graph._mousebutton;
+
+				/*
+				 * Only process event, if mouse button is depressed.
+				 */
+				if (btn) {
+					const properties = graph._properties;
+					const readonly = properties.readonly;
+
+					/*
+					 * If bar graph is not read-only, process mouse event.
+					 */
+					if (!readonly) {
+						e.preventDefault();
+						const val = mouseEventToValue(e, properties);
+						graph.setValueFloating(val);
+					}
+				}
+			};
+
+			/*
+			 * This is called when the mouse button is released.
+			 */
+			const mouseUpListener = function(e) {
+				const btn = graph._mousebutton;
+
+				/*
+				 * Only process event, if mouse button was depressed.
+				 */
+				if (btn) {
+					const properties = graph._properties;
+					const readonly = properties.readonly;
+
+					/*
+					 * If bar graph is not read only, process mouse event.
+					 */
+					if (!readonly) {
+						e.preventDefault();
+						const val = mouseEventToValue(e, properties);
+						graph.setValue(val);
+					}
+				}
+				graph._mousebutton = false;
+			};
+
+			/*
+			 * This is called when the drag action is canceled.
+			 */
+			const mouseCancelListener = function(e) {
+				const btn = graph._mousebutton;
+
+				/*
+				 * Abort action if mouse button was depressed.
+				 */
+				if (btn) {
+					graph.abort();
+					graph._mousebutton = false;
 				}
 
 			};
@@ -366,6 +552,10 @@
 				window.matchMedia(matcher).addEventListener('change', updatePixelRatio, params);
 			}
 
+			canvas.addEventListener('mousedown', mouseDownListener);
+			canvas.addEventListener('mouseleave', mouseCancelListener);
+			canvas.addEventListener('mousemove', mouseMoveListener);
+			canvas.addEventListener('mouseup', mouseUpListener);
 			canvas.addEventListener('resize', resizeListener);
 			updatePixelRatio();
 			return graph;
@@ -455,9 +645,7 @@
 						if (listener !== null) {
 							listener(this, value);
 						}
-
 					}
-
 				},
 
 				/*

@@ -203,6 +203,7 @@ Properties
 - `markerEnd`: Value where the last marker will be drawn along the track.
 - `markerStep`: Spacing (increment) between the markers.
 - `needle`: Boolean indicating whether we should use a simple marker / needle instead of a filling the bar to indicate value along the graph.
+- `readonly`: Boolean indicating whether the value of the bar graph is write-protected and thus not editable by the user. Useful for displaying values without allowing them to get edited.
 - `showValue`: Boolean that determines if the graph value should be displayed on the graph. It defaults to false.
 - `textScale`: Linear scaling factor for increasing / decreasing the font size. (`1.0` is default font size.)
 - `trackWidth`: Width of the track, relative to the absolute height of the control.
