@@ -234,7 +234,7 @@
 					const halfWidth = 0.5 * lineWidth;
 					const centerX = 0.5 * width;
 					const centerY = 0.5 * height;
-					const lineTop = centerY - halfWidth;
+					const lineTop = centerY - halfWidth - (label ? height * 0.05 : 0);
 					const lineBottom = centerY + halfWidth;
 					const relativeValue = (value - valMin) / (valMax - valMin);
 					const fillingEnd = width * relativeValue;
@@ -267,8 +267,8 @@
 							const relativePos = (v - valMin) / (valMax - valMin);
 							const pos = Math.round(width * relativePos);
 							ctx.beginPath();
-							ctx.moveTo(pos, 0);
-							ctx.lineTo(pos, height);
+							ctx.moveTo(pos, label ? height * 0.1 : 0);
+							ctx.lineTo(pos, height * (label ? 0.8 : 1.0));
 							ctx.stroke();
 						}
 
