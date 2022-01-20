@@ -665,6 +665,7 @@
 					'labelScale': 1.0,
 					'needle': false,
 					'readonly': false,
+					'showInput': true,
 					'textScale': 1.0,
 					'trackWidth': 0.4,
 					'valMin': 0,
@@ -1014,11 +1015,12 @@
 			const doubleClickListener = function(e) {
 				const properties = knob._properties;
 				const readonly = properties.readonly;
+				const showInput = properties.showInput;
 
 				/*
 				 * If knob is not read-only, display input element.
 				 */
-				if (!readonly) {
+				if (!readonly & showInput) {
 					e.preventDefault();
 					const inputDiv = knob._inputDiv;
 					inputDiv.style.display = 'block';
@@ -1060,11 +1062,12 @@
 				if (btn === 4) {
 					const properties = knob._properties;
 					const readonly = properties.readonly;
+					const showInput = properties.showInput;
 
 					/*
 					 * If knob is not read-only, display input element.
 					 */
-					if (!readonly) {
+					if (!readonly & showInput) {
 						e.preventDefault();
 						const inputDiv = knob._inputDiv;
 						inputDiv.style.display = 'block';
@@ -1152,6 +1155,7 @@
 			const touchStartListener = function(e) {
 				const properties = knob._properties;
 				const readonly = properties.readonly;
+				const showInput = properties.showInput;
 
 				/*
 				 * If knob is not read-only, process touch event.
@@ -1192,7 +1196,7 @@
 									 * If knob is not read-only,
 									 * display input element.
 									 */
-									if (!readonly) {
+									if (!readonly & showInput) {
 										e.preventDefault();
 										const inputDiv = knob._inputDiv;
 										inputDiv.style.display = 'block';

@@ -69,6 +69,7 @@ Properties
 - `labelScale`: Linear scaling factor for increasing / decreasing the label size. It defaults to 1.0.
 - `needle`: Boolean indicating whether we should use a simple marker / needle instead of a filling gauge to indicate value along the knob's track.
 - `readonly`: Boolean indicating whether the value of the knob is write-protected and thus not editable by the user. Useful for displaying values without allowing them to get edited.
+- `showInput`: Boolean indicating whether an input field should appear to edit the value when it is double clicked.
 - `textScale`: Linear scaling factor for increasing / decreasing the font size. (`1.0` is default font size.)
 - `trackWidth`: Width of the track, relative to the average radius of the knob.
 - `valMin`: Minimum selectable value.
